@@ -1,14 +1,18 @@
-# AI-Based Transport Route Planning System using Shortest Path Algorithms
+# AI-Based Smart Transport Fleet Management System
 
 ## Project Overview
 
-The AI-Based Transport Route Planning System is an intelligent route planning application that combines shortest path algorithms with machine learning-based travel time prediction.
+The AI-Based Smart Transport Fleet Management System is a Service-Oriented Architecture (SOA)-based intelligent transportation solution designed to improve the efficiency, reliability, and utilization of vehicle fleets.
 
-Traditional route planning systems generally focus on finding the shortest distance between a source and destination. However, the shortest route may not always be the fastest route because travel time can be affected by traffic congestion, vehicle speed, road type, weather conditions, and other transportation factors.
+Traditional fleet management systems mainly focus on vehicle tracking, driver management, trip scheduling, fuel monitoring, and maintenance record management. However, they often rely on manual decision-making and respond to problems only after they occur.
 
-This project addresses this problem by combining shortest path algorithms such as Dijkstra's Algorithm and A* Algorithm with a machine learning model that predicts estimated travel time. The system compares candidate routes and recommends a suitable route based on route characteristics and predicted travel time.
+The proposed system integrates Artificial Intelligence (AI), Machine Learning (ML), and independent SOA-based services to provide intelligent and predictive fleet management.
 
-The application follows Service-Oriented Architecture (SOA) and a microservices-based approach, with separate services for authentication, route processing, AI prediction, and route recommendation.
+The system manages vehicles, drivers, trips, maintenance, and routes through separate services that communicate through APIs. Machine learning techniques are used for predictive maintenance, fuel-consumption prediction, vehicle allocation, and travel-time/route prediction.
+
+Based on vehicle condition, availability, fuel efficiency, trip requirements, and predicted maintenance risks, the system recommends the most suitable vehicle and route for a particular trip.
+
+The major advantage of the proposed system is that it goes beyond basic fleet monitoring by providing AI-assisted decision-making and predictive optimization. The modular SOA architecture allows individual services to be developed, deployed, and scaled independently.
 
 ---
 
@@ -31,432 +35,273 @@ KLH Deemed to be University
 
 ## Problem Statement
 
-Traditional shortest path systems mainly select routes based on distance. However, the shortest route may experience high traffic congestion or unfavorable road and weather conditions and therefore may not provide the minimum travel time.
+Traditional fleet management systems primarily focus on monitoring vehicles, drivers, trips, fuel usage, and maintenance records. Vehicle allocation and operational decisions are often performed manually, while maintenance is frequently handled after a problem occurs.
 
-The proposed system aims to provide adaptive route recommendations by combining:
+This can lead to:
 
-* Shortest path algorithms
-* Machine learning-based travel-time prediction
-* Traffic and congestion information
-* Route comparison
-* SOA and microservices architecture
+* Unexpected vehicle breakdowns
+* Increased maintenance costs
+* Poor vehicle utilization
+* Unnecessary fuel consumption
+* Inefficient vehicle allocation
+* Increased operational downtime
+* Manual and reactive decision-making
+
+The proposed system addresses these limitations by combining SOA, AI/ML, predictive analytics, and route optimization to support proactive fleet management.
 
 ---
 
 ## Objectives
 
-* Develop an AI-based transport route planning system.
-* Implement Dijkstra's and A* shortest path algorithms.
-* Predict estimated travel time using machine learning.
-* Consider traffic congestion, vehicle speed, road type, weather, and route-related information.
-* Compare multiple candidate routes.
-* Recommend an efficient route based on predicted travel time.
-* Provide estimated time of arrival (ETA).
-* Implement SOA and microservices principles.
-* Provide secure authentication using JWT.
-* Implement service discovery using Eureka.
-* Use Spring Cloud Gateway for API routing.
-* Develop an independent AI service using Python and FastAPI.
+* To develop an AI-based smart fleet management system.
+* To manage vehicles, drivers, trips, maintenance, and routes through independent services.
+* To predict potential vehicle maintenance requirements before breakdowns occur.
+* To predict fuel consumption for better vehicle and trip planning.
+* To recommend the most suitable vehicle for a particular trip.
+* To predict travel time and support route selection.
+* To optimize routes using Dijkstra's Algorithm.
+* To improve vehicle utilization and operational efficiency.
+* To reduce fuel consumption and operational costs.
+* To minimize unexpected breakdowns and vehicle downtime.
+* To demonstrate SOA and microservices principles through API-based services.
 
 ---
 
 ## Key Features
 
-* User registration and login
-* JWT-based authentication
-* Source and destination selection
-* Shortest path calculation
-* Dijkstra's Algorithm
-* A* Algorithm
-* AI-based travel-time prediction
-* Traffic-aware route evaluation
-* Route comparison
-* Adaptive route recommendation
-* ETA prediction
-* Route history
-* User dashboard
-* Microservices-based backend
-* Service discovery using Eureka
-* API Gateway routing
+### Vehicle Management
+
+* Vehicle registration and management
+* Vehicle availability tracking
+* Vehicle condition monitoring
+* Fuel-efficiency information
+* Vehicle specifications
+* Maintenance status
+
+### Driver Management
+
+* Driver registration and management
+* Driver information
+* Driver-vehicle assignment
+* Driver-trip assignment
+
+### Trip Management
+
+* Create and manage trips
+* Assign vehicles and drivers
+* Store trip requirements
+* Track trip information
+* Estimate travel time
+
+### Predictive Maintenance
+
+The AI/ML component identifies vehicles that may require maintenance before a potential breakdown.
+
+The prediction can consider factors such as:
+
+* Vehicle usage
+* Mileage
+* Previous maintenance
+* Vehicle condition
+* Operational information
+* Maintenance history
+
+This supports proactive maintenance planning and can reduce unexpected downtime.
+
+### Fuel Consumption Prediction
+
+Machine learning is used to predict fuel consumption based on available vehicle and trip-related information.
+
+This can help:
+
+* Identify inefficient vehicles
+* Improve vehicle selection
+* Reduce unnecessary fuel consumption
+* Control operational costs
+
+### AI-Based Vehicle Allocation
+
+The system recommends a suitable vehicle for a trip based on factors such as:
+
+* Vehicle availability
+* Vehicle condition
+* Fuel efficiency
+* Trip requirements
+* Predicted maintenance risk
+* Operational suitability
+
+### Route Planning and Prediction
+
+The system uses Dijkstra's Algorithm for route optimization and can use the Google Maps API for real-world geographical and route information.
+
+The system considers route characteristics and predicted travel time when recommending a route.
+
+### Fleet Analytics
+
+The system can provide information about:
+
+* Vehicle utilization
+* Fuel consumption
+* Maintenance requirements
+* Trip performance
+* Route efficiency
+* Fleet operational performance
 
 ---
 
 ## System Architecture
 
+The system follows a Service-Oriented Architecture (SOA) approach.
+
 ```text
                          USER
                            |
                            v
-                    React.js Frontend
+                    React Frontend
                            |
                            v
-                Spring Cloud Gateway
+                     FastAPI/API Layer
                            |
-                           v
-                    Eureka Server
+          +----------------+----------------+
+          |                |                |
+          v                v                v
+   Vehicle Service   Driver Service    Trip Service
+          |                |                |
+          +----------------+----------------+
                            |
-        +------------------+------------------+
-        |                  |                  |
-        v                  v                  v
- Authentication       Route Service      AI Prediction
-    Service               Service            Service
-        |                  |                  |
-        |                  |             Python + FastAPI
-        |                  |                  |
-        |                  v                  v
-        |             Dijkstra / A*      ML Prediction
-        |                  |                  |
-        |                  +--------+---------+
-        |                           |
-        |                           v
-        |                  Recommendation
-        |                     Service
-        |                           |
-        +---------------------------+
-                                    |
-                                    v
-                           Recommended Route
-                                    +
-                                   ETA
-                                    |
-                                    v
-                              React Frontend
+          +----------------+----------------+
+          |                |                |
+          v                v                v
+ Maintenance Service  Route Service   AI/ML Service
+                                            |
+                               +------------+------------+
+                               |            |            |
+                               v            v            v
+                         Random Forest   XGBoost    Predictions
+                               |            |            |
+                               +------------+------------+
+                                            |
+                                            v
+                                  Recommendation
+                                            |
+                                            v
+                                      PostgreSQL
 ```
 
 ---
 
-## Microservices
+## SOA Services
 
-### 1. Authentication Service
+### 1. Vehicle Service
 
-The Authentication Service manages user authentication and authorization.
+Responsible for managing vehicle-related information.
 
 Responsibilities:
 
-* User registration
-* User login
-* JWT token generation
-* Authentication
-* Authorization
-* User management
+* Vehicle registration
+* Vehicle details
+* Vehicle availability
+* Vehicle status
+* Vehicle condition
+* Fuel-efficiency information
 
-### 2. Route Service
+### 2. Driver Service
 
-The Route Service handles route-related operations.
+Responsible for driver-related information.
+
+Responsibilities:
+
+* Driver registration
+* Driver details
+* Driver assignment
+* Driver availability
+* Driver-trip allocation
+
+### 3. Trip Service
+
+Responsible for trip planning and management.
+
+Responsibilities:
+
+* Trip creation
+* Trip requirements
+* Vehicle assignment
+* Driver assignment
+* Trip records
+* Travel information
+
+### 4. Maintenance Service
+
+Responsible for vehicle maintenance information.
+
+Responsibilities:
+
+* Maintenance records
+* Service history
+* Maintenance status
+* Maintenance scheduling
+* Predicted maintenance requirements
+
+### 5. Route Service
+
+Responsible for route processing and optimization.
 
 Responsibilities:
 
 * Source and destination processing
 * Route generation
+* Distance calculation
+* Dijkstra's shortest-path algorithm
 * Route information
-* Shortest path calculation
-* Dijkstra's Algorithm
-* A* Algorithm
-* Route history
+* Travel-time information
 
-### 3. AI Prediction Service
+### 6. AI/ML Service
 
-The AI Prediction Service is an independent Python-based microservice developed using FastAPI and Scikit-learn.
+An independent Python-based service responsible for intelligent predictions.
 
-It receives transportation-related features and predicts the estimated travel time.
+Responsibilities:
 
-The ML model uses relevant features available in the selected dataset, including:
-
-* Traffic volume
-* Average speed
-* Congestion level
-* Road type
-* Weather conditions
-
-The output of the AI service is:
-
-```text
-Predicted Travel Time
-```
-
-### 4. Route Recommendation Service
-
-The Route Recommendation Service combines the results from the Route Service and AI Prediction Service.
-
-```text
-Candidate Routes
-       +
-Predicted Travel Times
-       |
-       v
-Route Comparison
-       |
-       v
-Best Route Recommendation
-       |
-       v
-ETA
-```
+* Predictive maintenance
+* Fuel-consumption prediction
+* Vehicle suitability/selection
+* Travel-time prediction
+* AI-based recommendations
 
 ---
 
 ## AI/ML Component
 
-The machine learning component focuses on travel-time prediction.
+The AI/ML component is the core intelligent part of the system.
 
-The project uses the Kaggle dataset:
+Instead of only monitoring current fleet conditions, the system uses machine learning to support prediction and decision-making.
 
-**Urban Traffic Congestion and Travel Time Analysis**
+### Machine Learning Models
 
-The dataset is a synthetic and anonymized urban traffic dataset containing more than 2,500 records. It is provided in CSV format and is designed for applications including travel-time prediction and traffic-congestion analysis.
+#### Random Forest
 
-### Dataset Features
+Random Forest can be used for tasks such as:
 
-The dataset contains transportation observations including:
+* Predictive maintenance classification
+* Vehicle condition classification
+* Vehicle suitability prediction
 
-* Traffic volume
-* Average speed
-* Congestion level
-* Road type
-* Weather conditions
-* Estimated travel time
+#### XGBoost
 
-These factors represent transportation and environmental conditions that can influence travel time.
+XGBoost can be used for tasks such as:
 
-### ML Workflow
+* Fuel-consumption prediction
+* Travel-time prediction
+* Maintenance-risk prediction
+* Other regression or classification tasks
+
+The final model for each task can be selected based on the available dataset and model performance.
+
+---
+
+## Predictive Maintenance Workflow
 
 ```text
-Urban Traffic Dataset
-          |
-          v
-    Data Preprocessing
-          |
-          v
-     Feature Selection
-          |
-          v
-      Train/Test Split
-          |
-          v
-   Scikit-learn Model
-          |
-          v
-    Model Evaluation
-          |
-          v
-      Trained Model
-          |
-          v
-        FastAPI
-          |
-          v
- Predicted Travel Time
-```
-
-The trained machine learning model is exposed through the FastAPI service. During route evaluation, the AI service receives the required route and traffic-related features and returns the predicted travel time.
-
----
-
-## Dataset Source
-
-The dataset used for the AI component is:
-
-**Urban Traffic Congestion and Travel Time Analysis**
-
-Dataset source:
-
-[Kaggle Dataset](https://www.kaggle.com/datasets/jayjoshi37/urban-traffic-congestion-and-travel-time-analysis?utm_source=chatgpt.com)
-
-### Dataset Information
-
-| Property        | Details                                           |
-| --------------- | ------------------------------------------------- |
-| Dataset         | Urban Traffic Congestion and Travel Time Analysis |
-| Source          | Kaggle                                            |
-| Format          | CSV                                               |
-| Records         | 2,500+                                            |
-| Type            | Synthetic and anonymized                          |
-| Primary ML Task | Travel-time prediction                            |
-| Additional Task | Traffic congestion analysis                       |
-| License         | CC0: Public Domain                                |
-
-The Kaggle dataset description identifies travel-time prediction as one of its intended use cases.
-
----
-
-## Shortest Path Algorithms
-
-### Dijkstra's Algorithm
-
-Dijkstra's Algorithm is used to find the shortest path between nodes in a weighted graph.
-
-In this project, it can be used to determine the shortest route between the source and destination based on the assigned route weights.
-
-### A* Algorithm
-
-A* is a heuristic-based shortest path algorithm that uses the cost already travelled along with an estimated cost to the destination.
-
-It can efficiently search for a suitable path when geographical information is available.
-
----
-
-## Adaptive Route Recommendation
-
-The system does not rely only on the shortest distance.
-
-For example:
-
-```text
-Route A
-Distance: 5 km
-Traffic: High
-Predicted Time: 35 minutes
-
-Route B
-Distance: 7 km
-Traffic: Low
-Predicted Time: 25 minutes
-```
-
-Although Route A is shorter in distance, Route B can be recommended because its predicted travel time is lower.
-
-The overall process is:
-
-```text
-Shortest Path Algorithms
-          +
-AI Travel-Time Prediction
-          |
-          v
-Route Comparison
-          |
-          v
-Adaptive Route Recommendation
-```
-
----
-
-## SOA and Microservices Concepts
-
-The project demonstrates the following SOA and microservices concepts:
-
-* Service-oriented architecture
-* Independent services
-* REST APIs
-* Service contracts and endpoints
-* API Gateway
-* Service discovery
-* Eureka Server
-* Microservice communication
-* JWT authentication
-* Spring Security
-* CORS
-* Database-per-service concept
-* Spring Data JPA
-* Unit testing
-* Integration testing
-
----
-
-## Security
-
-Security is implemented using:
-
-* Spring Security
-* JWT authentication
-* Authorization
-* CORS configuration
-
-JWT tokens are used to authenticate users and protect restricted API endpoints.
-
-TLS/SSL can be configured for secure communication where required.
-
----
-
-## Database
-
-PostgreSQL is used for persistent data storage.
-
-The database stores information such as:
-
-* User details
-* Route information
-* Travel history
-* Prediction-related information
-* Application data
-
-Spring Data JPA is used for database interaction in the Spring Boot services.
-
-The project follows the database-per-service concept where appropriate, allowing individual services to manage their own related data.
-
----
-
-## Technology Stack
-
-| Technology           | Purpose              |
-| -------------------- | -------------------- |
-| React.js             | Frontend             |
-| Java                 | Backend development  |
-| Spring Boot          | Microservices        |
-| Spring Cloud Gateway | API Gateway          |
-| Spring Cloud Eureka  | Service Discovery    |
-| Spring Security      | Security             |
-| JWT                  | Authentication       |
-| PostgreSQL           | Database             |
-| Spring Data JPA      | Database interaction |
-| Python               | AI/ML development    |
-| FastAPI              | AI prediction API    |
-| Scikit-learn         | Machine Learning     |
-| Dijkstra             | Shortest path        |
-| A*                   | Shortest path        |
-| GitHub               | Version control      |
-
----
-
-## Project Flow
-
-```text
-1. User enters source and destination
-                 |
-                 v
-2. React sends request to API Gateway
-                 |
-                 v
-3. Gateway identifies the required service
-                 |
-                 v
-4. Eureka discovers the required service
-                 |
-                 v
-5. Route Service generates candidate routes
-                 |
-                 v
-6. Dijkstra / A* calculates shortest paths
-                 |
-                 v
-7. Route and traffic-related features are sent
-   to the AI Prediction Service
-                 |
-                 v
-8. ML model predicts travel time
-                 |
-                 v
-9. Recommendation Service compares routes
-                 |
-                 v
-10. Best route and ETA are returned
-                 |
-                 v
-11. React displays the recommendation
-```
-
----
-
-## AI Prediction Flow
-
-```text
-Traffic Data
-     |
-     +---- Traffic Volume
-     +---- Average Speed
-     +---- Congestion Level
-     +---- Road Type
-     +---- Weather
+Vehicle Data
      |
      v
 Data Preprocessing
@@ -465,56 +310,304 @@ Data Preprocessing
 Feature Selection
      |
      v
-Scikit-learn Model
+Random Forest / XGBoost
      |
      v
-Predicted Travel Time
+Maintenance Risk Prediction
      |
      v
-Route Recommendation Service
+Maintenance Recommendation
+     |
+     v
+Proactive Vehicle Maintenance
+```
+
+The system aims to identify vehicles that may require maintenance before a potential failure occurs.
+
+---
+
+## Fuel Consumption Prediction Workflow
+
+```text
+Vehicle + Trip Data
+        |
+        v
+Data Preprocessing
+        |
+        v
+Feature Engineering
+        |
+        v
+XGBoost / ML Model
+        |
+        v
+Predicted Fuel Consumption
+        |
+        v
+Vehicle Selection / Planning
+```
+
+Fuel prediction can support better vehicle allocation and help reduce unnecessary fuel usage.
+
+---
+
+## AI-Based Vehicle Allocation
+
+The system does not simply assign the first available vehicle.
+
+Instead, it evaluates available vehicles using factors such as:
+
+```text
+Vehicle Availability
+        +
+Vehicle Condition
+        +
+Fuel Efficiency
+        +
+Trip Requirements
+        +
+Maintenance Risk
+        +
+Predicted Performance
+        |
+        v
+AI-Based Vehicle Recommendation
+```
+
+For example, if one vehicle is available but has a high predicted maintenance risk and poor fuel efficiency, the system can recommend another suitable vehicle with lower risk and better efficiency.
+
+---
+
+## Route Optimization
+
+The system uses Dijkstra's Algorithm for shortest-path calculation.
+
+Google Maps API can be integrated to obtain real-world geographical and route information.
+
+The route recommendation process can consider:
+
+* Route distance
+* Travel time
+* Vehicle suitability
+* Traffic-related information
+* Route characteristics
+
+### Example
+
+```text
+Route A
+Distance: 5 km
+Predicted Time: 35 minutes
+
+Route B
+Distance: 7 km
+Predicted Time: 25 minutes
+```
+
+Although Route A is shorter, Route B may be recommended because its predicted travel time is lower.
+
+---
+
+## Overall Intelligent Workflow
+
+```text
+User
+ |
+ v
+React Frontend
+ |
+ v
+API Layer
+ |
+ +--------------------+
+ |                    |
+ v                    v
+Fleet Services      Route Service
+ |                    |
+ |                    v
+ |             Dijkstra Algorithm
+ |                    |
+ +----------+---------+
+            |
+            v
+        AI/ML Service
+            |
+      +-----+-----+
+      |     |     |
+      v     v     v
+   Fuel   Travel  Maintenance
+ Prediction Time   Risk
+      |     |     |
+      +-----+-----+
+            |
+            v
+    Vehicle + Route Recommendation
+            |
+            v
+       React Dashboard
 ```
 
 ---
 
+## Database
+
+PostgreSQL is used for persistent data storage.
+
+The database can store:
+
+* Vehicle details
+* Driver details
+* Trip information
+* Maintenance records
+* Fuel-related information
+* Route information
+* Prediction-related information
+* Application data
+
+The SOA design allows services to manage their respective data independently where appropriate.
 
 ---
 
-## Expected Outcome
+## Technology Stack
 
-The completed system will provide an intelligent route planning platform that:
+| Technology           | Purpose                                  |
+| -------------------- | ---------------------------------------- |
+| React                | Frontend                                 |
+| Python               | Backend and AI/ML development            |
+| FastAPI              | API and independent AI/ML services       |
+| Machine Learning     | Prediction and decision support          |
+| Random Forest        | Classification/prediction                |
+| XGBoost              | Regression/classification and prediction |
+| Dijkstra's Algorithm | Shortest-path route optimization         |
+| Google Maps API      | Maps and real-world route information    |
+| PostgreSQL           | Database                                 |
+| REST APIs            | Service communication                    |
+| SOA                  | System architecture                      |
 
-* Finds candidate routes using shortest path algorithms.
-* Predicts travel time using machine learning.
-* Considers traffic, congestion, road type, weather, and speed-related factors.
-* Compares alternative routes.
-* Recommends a suitable route.
-* Provides estimated travel time and ETA.
-* Provides secure user authentication.
-* Uses independent microservices for modularity and maintainability.
-* Demonstrates SOA and microservices concepts in a practical transportation application.
+---
+
+---
+
+## Security
+
+The system can implement:
+
+* Authentication
+* Authorization
+* Secure API communication
+* Input validation
+* Role-based access where required
+
+Security controls can be implemented at the API/service layer.
+
+---
+
+## Project Flow
+
+```text
+1. User logs into the system
+            |
+            v
+2. User enters trip requirements
+            |
+            v
+3. System checks available vehicles
+            |
+            v
+4. Vehicle and trip information is processed
+            |
+            v
+5. AI/ML models predict:
+      - Maintenance risk
+      - Fuel consumption
+      - Travel time
+      - Vehicle suitability
+            |
+            v
+6. Route Service calculates suitable routes
+            |
+            v
+7. Dijkstra's Algorithm finds shortest paths
+            |
+            v
+8. AI predictions are combined with route information
+            |
+            v
+9. System recommends suitable vehicle + route
+            |
+            v
+10. Recommendation is displayed on React dashboard
+```
+
+---
+
+## Advantages
+
+### Traditional Fleet Management
+
+* Mainly monitoring-based
+* Manual vehicle allocation
+* Reactive maintenance
+* Limited predictive capability
+* Separate manual processes
+* Problems are often addressed after occurrence
+
+### Proposed System
+
+* AI-assisted fleet management
+* Predictive maintenance
+* Fuel-consumption prediction
+* Intelligent vehicle allocation
+* Travel-time prediction
+* Route optimization
+* API-based independent services
+* Modular SOA architecture
+* Data-driven decision-making
+* Better fleet utilization
+
+---
+
+## Expected Outcomes
+
+The proposed system aims to:
+
+* Reduce fuel consumption
+* Reduce unexpected vehicle breakdowns
+* Reduce vehicle downtime
+* Improve vehicle utilization
+* Improve vehicle allocation
+* Optimize transportation routes
+* Reduce operational costs
+* Improve maintenance planning
+* Improve fleet reliability
+* Support intelligent transportation decisions
 
 ---
 
 ## Future Enhancements
 
+* Real-time GPS tracking
 * Real-time traffic data integration
-* Live map integration
+* IoT sensor integration
+* Live vehicle monitoring
 * Real-time weather API
 * Dynamic route updates
-* Public transportation integration
+* Driver behavior analysis
+* Accident-risk prediction
+* Automated maintenance scheduling
+* Cloud deployment and scaling
 * Mobile application
-* Advanced machine learning models
-* Real-time traffic-aware route prediction
-* Support for additional transportation modes
+* Advanced deep-learning models
+* Real-time fleet analytics
 
 ---
 
 ## Conclusion
 
-The AI-Based Transport Route Planning System combines shortest path algorithms and artificial intelligence to provide adaptive transportation recommendations.
+The AI-Based Smart Transport Fleet Management System combines Service-Oriented Architecture, Artificial Intelligence, Machine Learning, and route optimization to create an intelligent fleet management platform.
 
-By integrating Dijkstra and A* algorithms with machine learning-based travel-time prediction, the system goes beyond traditional distance-based route selection.
+Unlike conventional fleet management systems that mainly monitor vehicles and maintain records, the proposed system focuses on prediction, proactive maintenance, intelligent vehicle allocation, fuel optimization, and route decision support.
 
-The SOA and microservices architecture separates authentication, route processing, AI prediction, and route recommendation into independent services. This provides a modular and maintainable architecture while demonstrating important SOA concepts such as REST services, service discovery, API Gateway, security, service communication, and database management.
+By using Random Forest, XGBoost, Dijkstra's Algorithm, Google Maps API, Python, FastAPI, React, and PostgreSQL, the system provides a modular and intelligent platform for managing transport fleets.
 
-The selected Kaggle dataset provides a practical foundation for developing the travel-time prediction component, with traffic, speed, congestion, road, and weather information available for machine learning applications.
+The overall goal is to create a smarter, more efficient, predictive, reliable, and cost-effective fleet management system.
