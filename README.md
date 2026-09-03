@@ -1,7 +1,7 @@
 # AI-Based Smart Transport Fleet Management System
 
 ## Project Overview
-
+ 
 The AI-Based Smart Transport Fleet Management System is a Service-Oriented Architecture (SOA)-based intelligent transportation solution designed to improve the efficiency, reliability, and utilization of vehicle fleets.
 
 Traditional fleet management systems mainly focus on vehicle tracking, driver management, trip scheduling, fuel monitoring, and maintenance record management. However, they often rely on manual decision-making and respond to problems only after they occur.
